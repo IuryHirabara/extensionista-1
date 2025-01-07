@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Pegada de Carbono</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card p-4">
+            <h2 class="text-center">Calculadora de Pegada de Carbono</h2>
+            <p class="text-center text-muted">Calcule sua pegada de carbono com base em suas atividades diárias</p>
+            <form id="carbonForm">
+                <div class="mb-3">
+                    <label for="transport" class="form-label">Transporte mensal (km)</label>
+                    <input type="number" id="transport" class="form-control" placeholder="e.g., 500" required>
+                </div>
+                <div class="mb-3">
+                    <label for="electricity" class="form-label">Eletricidade mensal (kWh)</label>
+                    <input type="number" id="electricity" class="form-control" placeholder="e.g., 200" required>
+                </div>
+                <div class="mb-3">
+                    <label for="gas" class="form-label">Consumo de gás mensal (m³)</label>
+                    <input type="number" id="gas" class="form-control" placeholder="e.g., 50" required>
+                </div>
+                <div class="mb-3">
+                    <label for="meat" class="form-label">Consumo semanal de carne (kg)</label>
+                    <input type="number" id="meat" class="form-control" placeholder="e.g., 4" required>
+                </div>
+                <div class="mb-3">
+                    <label for="flights" class="form-label">Voos anuais (horas)</label>
+                    <input type="number" id="flights" class="form-control" placeholder="e.g., 20" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Calcular</button>
+            </form>
+            <div id="result" class="mt-4 text-center d-none">
+                <h4>Sua pegada de carbono</h4>
+                <p id="footprintValue" class="fs-5 text-success"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('carbonForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const transport = parseFloat(document.getElementById('transport').value) || 0;
+            const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+            const gas = parseFloat(document.getElementById('gas').value) || 0;
+            const meat = parseFloat(document.getElementById('meat').value) || 0;
+            const flights = parseFloat(document.getElementById('flights').value) || 0;
+
+            const footprint = (
+                (transport * 0.21) +
+                (electricity * 0.475) +
+                (gas * 2.2) +
+                (meat * 27) +
+                (flights * 90)
+            ).toFixed(2);
+
+            document.getElementById('footprintValue').textContent = `${footprint} kg CO2/mês`;
+            document.getElementById('result').classList.remove('d-none');
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
